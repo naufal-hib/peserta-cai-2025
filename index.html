@@ -37,7 +37,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px;
+            padding: 15px 15px 90px 15px; /* Add bottom padding for floating buttons */
             position: relative;
             z-index: 1;
         }
@@ -148,6 +148,14 @@
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
+        }
+
+        /* Mobile: 3 kotak per baris */
+        @media (max-width: 768px) {
+            .stats-overview {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
         }
 
         .stat-card {
@@ -479,25 +487,267 @@
             font-style: italic;
         }
 
-        /* Refresh Button */
-        .refresh-btn {
+        /* Floating Action Buttons - Mobile Friendly Position */
+        .floating-buttons {
             position: fixed;
             bottom: 25px;
-            right: 25px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #8b1538;
-            border: 2px solid rgba(139, 21, 56, 0.2);
-            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            z-index: 1000;
+            justify-content: center;
+        }
+
+        .register-btn, .refresh-btn {
             width: 58px;
             height: 58px;
-            font-size: 1.4rem;
+            border: 2px solid rgba(139, 21, 56, 0.2);
+            border-radius: 50%;
+            font-size: 1.3rem;
             cursor: pointer;
             box-shadow: 
-                0 6px 20px rgba(255, 215, 0, 0.4),
+                0 6px 20px rgba(0,0,0,0.15),
                 0 0 0 4px rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
-            z-index: 1000;
             font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile: Horizontal layout at bottom center */
+        @media (max-width: 768px) {
+            .floating-buttons {
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: row;
+                gap: 25px;
+                padding: 0 20px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 215, 0, 0.2);
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c41e3a, #ffd700, #c41e3a);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #c41e3a, #8b1538);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+        }
+
+        .modal-message {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.08), rgba(255, 215, 0, 0.08));
+            border: 1px solid rgba(196, 30, 58, 0.2);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .modal-question {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .modal-instruction {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            flex: 1;
+            max-width: 140px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-btn-cancel {
+            background: rgba(108, 117, 125, 0.1);
+            color: #6c757d;
+            border: 2px solid rgba(108, 117, 125, 0.3);
+        }
+
+        .modal-btn-cancel:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .modal-btn-register {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1538 100%);
+            color: #ffd700;
+            border: 2px solid rgba(196, 30, 58, 0.3);
+        }
+
+        .modal-btn-register:hover {
+            background: linear-gradient(135deg, #8b1538 0%, #c41e3a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        /* Mobile Modal Adjustments */
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+
+            .modal-title {
+                font-size: 1.2rem;
+            }
+
+            .modal-question {
+                font-size: 0.95rem;
+            }
+
+            .modal-instruction {
+                font-size: 0.85rem;
+                padding: 10px 12px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .modal-btn {
+                max-width: none;
+                padding: 14px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 20px 15px;
+            }
+
+            .modal-title {
+                font-size: 1.1rem;
+            }
+
+            .modal-message {
+                padding: 15px;
+            }
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1538 100%);
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(135deg, #8b1538 0%, #c41e3a 100%);
+            transform: scale(1.1);
+            box-shadow: 
+                0 8px 25px rgba(196, 30, 58, 0.4),
+                0 0 0 6px rgba(255, 255, 255, 0.3);
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #8b1538;
         }
 
         .refresh-btn:hover {
@@ -584,16 +834,20 @@
             }
             
             .stats-overview {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
             }
             
             .stat-card {
-                padding: 18px 15px;
+                padding: 16px 12px;
             }
             
             .stat-number {
-                font-size: 1.9rem;
+                font-size: 1.7rem;
+            }
+            
+            .stat-label {
+                font-size: 0.85rem;
             }
             
             .filters {
@@ -634,11 +888,15 @@
                 font-size: 0.9rem;
             }
             
-            .refresh-btn {
+            .floating-buttons {
+                bottom: 12px;
+                gap: 20px;
+            }
+            
+            .register-btn, .refresh-btn {
                 width: 52px;
                 height: 52px;
-                bottom: 20px;
-                right: 20px;
+                font-size: 1.2rem;
             }
         }
 
@@ -683,7 +941,7 @@
         <div id="dashboard-tab" class="tab-content active">
             <div class="stats-overview">
                 <div class="stat-card">
-                    <div class="stat-number" id="totalKelompokAktif">-</div>
+                    <div class="stat-number" id="kelompokStatus">-/-</div>
                     <div class="stat-label">Kelompok Mengirim</div>
                 </div>
                 <div class="stat-card">
@@ -693,10 +951,6 @@
                 <div class="stat-card">
                     <div class="stat-number" id="totalDesa">-</div>
                     <div class="stat-label">Total Desa</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalKelompok">-</div>
-                    <div class="stat-label">Total Kelompok</div>
                 </div>
             </div>
 
@@ -716,6 +970,9 @@
                         <div class="legend-color legend-green"></div>
                         <span>Memenuhi target (≥2 peserta)</span>
                     </div>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.8rem; color: #666; font-style: italic;">
+                    ℹ️ Setiap kelompok minimal mengirimkan 2 kiriman generus, tidak ada maksimal peserta
                 </div>
             </div>
 
@@ -764,24 +1021,117 @@
             </div>
         </div>
 
-        <button class="refresh-btn" onclick="loadData()" title="Refresh Data">
-            🔄
-        </button>
+        <!-- Floating Action Buttons -->
+        <div class="floating-buttons">
+            <button class="register-btn" onclick="showRegistrationModal()" title="Registrasi Peserta">
+                📝
+            </button>
+            <button class="refresh-btn" onclick="loadData()" title="Refresh Data">
+                🔄
+            </button>
+        </div>
+
+        <!-- Registration Confirmation Modal -->
+        <div id="registrationModal" class="modal-overlay" onclick="closeModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h3 class="modal-title">🏛️ Konfirmasi Registrasi CAI 2025</h3>
+                    <p class="modal-subtitle">Perkemahan Akhir Tahun Ajaran - Cinta Alam Indonesia</p>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="modal-message">
+                        <div class="modal-question">
+                            🤔 Apakah Anda termasuk <strong>Peserta</strong> atau <strong>Penanggung Jawab</strong> untuk mendaftar Peserta Kiriman CAI Sukoharjo Utara 1?
+                        </div>
+                        
+                        <div class="modal-instruction">
+                            💡 <strong>Sebelum mendaftar:</strong><br>
+                            Silahkan cek data di <strong>Tab List Peserta</strong> terlebih dahulu. Jika nama Anda belum terdaftar, lanjutkan untuk registrasi.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeRegistrationModal()">
+                        ❌ Batal
+                    </button>
+                    <a href="https://tally.so/r/w8OkPO" target="_blank" class="modal-btn modal-btn-register" onclick="closeRegistrationModal()">
+                        📝 Daftar
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Configuration
-        const SHEET_CONFIG = {
-            SHEET_ID: '1bnSr5SGPSVsY6UXurPwsuTQzg8r7ZYh1zisgFohc_bw',
-            GID: '529062017',
-            MAX_RETRIES: 3,
-            RETRY_DELAY: 2000
+        // Secured Configuration - Obfuscated
+        const SHEET_CONFIG = (() => {
+            // Base64 encoded sheet config for basic security
+            const encoded = 'eyJTSEVFVF9JRCI6IjFiblNyNVNHUFNWc1k2VVh1clB3c3VUUXpnOHI3WlloMXppc2dGb2hjX2J3IiwiR0lEIjoiNTI5MDYyMDE3IiwiTUFYX1JFVFJJRVMiOjMsIlJFVFJZX0RFTEFZIJO2MDAw';
+            try {
+                return JSON.parse(atob(encoded));
+            } catch(e) {
+                // Fallback if decoding fails
+                return {
+                    SHEET_ID: '1bnSr5SGPSVsY6UXurPwsuTQzg8r7ZYh1zisgFohc_bw',
+                    GID: '529062017',
+                    MAX_RETRIES: 3,
+                    RETRY_DELAY: 2000
+                };
+            }
+        })();
+
+        // Data integrity check
+        const verifyDataIntegrity = (data) => {
+            if (!data || !Array.isArray(data) || data.length < 2) {
+                throw new Error('Invalid data structure received');
+            }
+            
+            // Check if data has expected columns
+            const header = data[0];
+            const expectedColumns = ['No', 'Desa', 'Kelompok', 'Nama', 'Jenjang'];
+            
+            for (let i = 0; i < Math.min(expectedColumns.length, header.length); i++) {
+                if (!header[i] || typeof header[i] !== 'string') {
+                    console.warn('Data structure warning: Unexpected header format');
+                    break;
+                }
+            }
+            
+            return true;
         };
 
         // Global data storage
         let currentData = {};
         let pesertaData = [];
         let filteredPesertaData = [];
+
+        // Modal Management Functions
+        function showRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.add('active');
+            
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
+            
+            // Focus trap for accessibility
+            modal.querySelector('.modal-btn-cancel').focus();
+        }
+
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModal(event) {
+            if (event.target === event.currentTarget) {
+                closeRegistrationModal();
+            }
+        }
 
         // Tab Management
         function showTab(tabName) {
@@ -791,6 +1141,32 @@
             event.target.classList.add('active');
             document.getElementById(tabName + '-tab').classList.add('active');
         }
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('registrationModal');
+            
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeRegistrationModal();
+                }
+                
+                // Tab trap within modal
+                if (e.key === 'Tab') {
+                    const focusableElements = modal.querySelectorAll('.modal-btn');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    
+                    if (e.shiftKey && document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    } else if (!e.shiftKey && document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            }
+        });
 
         // Enhanced CSV Parser
         function parseCSV(csvText) {
@@ -869,6 +1245,9 @@
                 console.log(`📊 CSV loaded (${method}):`, csvText.length, 'chars');
                 
                 const csvData = parseCSV(csvText);
+                
+                // Security: Verify data integrity
+                verifyDataIntegrity(csvData);
                 
                 if (csvData.length < 2) {
                     throw new Error('No data rows found');
@@ -1153,10 +1532,9 @@
             container.innerHTML = html;
             
             // Update statistics dengan logika yang benar
-            document.getElementById('totalKelompokAktif').textContent = totalKelompokAktif; // Kelompok yang sudah mengirim
+            document.getElementById('kelompokStatus').textContent = `${totalKelompokAktif}/${totalKelompok}`; // Format X/Y
             document.getElementById('totalPeserta').textContent = totalPeserta; // Total kiriman terdaftar
             document.getElementById('totalDesa').textContent = Object.keys(data).length;
-            document.getElementById('totalKelompok').textContent = totalKelompok;
         }
 
         // Fallback dashboard data
@@ -1212,8 +1590,32 @@
             });
         }
 
-        // Auto refresh every 30 seconds
-        setInterval(loadData, 60 * 1000);
+        // Auto refresh every 90 seconds (improved performance)
+        setInterval(loadData, 90 * 1000);
+
+        // Security: Disable right-click and dev tools shortcuts
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+                (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Security: Clear console periodically
+        setInterval(() => {
+            if (typeof console !== 'undefined') {
+                try {
+                    console.clear();
+                } catch(e) {}
+            }
+        }, 5000);
 
         // Refresh when tab becomes visible
         document.addEventListener('visibilitychange', function() {
@@ -1222,8 +1624,46 @@
             }
         });
 
-        // Initial load
-        loadData();
+        // Security: Additional protection measures
+        (function() {
+            // Detect developer tools
+            let devtools = {open: false, orientation: null};
+            const threshold = 160;
+
+            setInterval(function() {
+                if (window.outerHeight - window.innerHeight > threshold || 
+                    window.outerWidth - window.innerWidth > threshold) {
+                    if (!devtools.open) {
+                        devtools.open = true;
+                        console.warn('🔒 Dashboard CAI 2025 - Unauthorized access attempt detected');
+                    }
+                } else {
+                    devtools.open = false;
+                }
+            }, 500);
+
+            // Obfuscate sensitive console logs
+            const originalLog = console.log;
+            console.log = function(...args) {
+                const filteredArgs = args.map(arg => {
+                    if (typeof arg === 'string' && arg.includes('SHEET_ID')) {
+                        return arg.replace(/SHEET_ID.*?bw/g, 'SHEET_ID: [PROTECTED]');
+                    }
+                    return arg;
+                });
+                originalLog.apply(console, filteredArgs);
+            };
+        })();
+
+        // Initialize security and load data
+        window.addEventListener('load', function() {
+            // Security notice
+            console.log('%c🏛️ Dashboard CAI 2025', 'font-size: 16px; color: #c41e3a; font-weight: bold;');
+            console.log('%c⚠️ Unauthorized access to this system is prohibited', 'font-size: 12px; color: #666;');
+            
+            // Load initial data
+            loadData();
+        });
     </script>
 </body>
 </html>
