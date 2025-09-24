@@ -15,46 +15,92 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 15px;
         }
 
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            padding: 20px 0;
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .last-update {
             background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 25px;
             display: inline-block;
             backdrop-filter: blur(10px);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            flex: 1;
+            max-width: 200px;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Dashboard Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .stats-overview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
             background: rgba(255,255,255,0.95);
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px 15px;
             text-align: center;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
@@ -63,24 +109,25 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .stat-label {
             color: #666;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -95,8 +142,8 @@
         }
 
         .card-header {
-            padding: 20px;
-            font-size: 1.2rem;
+            padding: 18px 20px;
+            font-size: 1.1rem;
             font-weight: bold;
             text-align: center;
             color: white;
@@ -110,13 +157,15 @@
 
         .card-content {
             padding: 20px;
+            max-height: 350px;
+            overflow-y: auto;
         }
 
         .data-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
 
@@ -126,51 +175,139 @@
 
         .kelompok {
             color: #555;
+            font-size: 0.95rem;
         }
 
         .kiriman {
             font-weight: bold;
             color: #667eea;
             font-size: 1.1rem;
+            min-width: 30px;
+            text-align: right;
         }
 
-        .refresh-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+        /* List Peserta Styles */
+        .filters {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .peserta-table {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
             background: #667eea;
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .refresh-btn:hover {
-            background: #5a6fd8;
-            transform: scale(1.1);
+        .table-container {
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
-        .refresh-btn:active {
-            transform: rotate(360deg);
+        .peserta-list {
+            list-style: none;
         }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-overview {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .peserta-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr 100px;
+            gap: 15px;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .peserta-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .peserta-item:last-child {
+            border-bottom: none;
+        }
+
+        .peserta-no {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        .peserta-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .peserta-nama {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .peserta-details {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .peserta-kelompok {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .peserta-jenjang {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
         }
 
         .loading {
@@ -188,6 +325,145 @@
             margin: 20px 0;
             text-align: center;
         }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .refresh-btn:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .refresh-btn:active {
+            transform: rotate(360deg);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .last-update {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .stat-card {
+                padding: 15px 10px;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .card-content {
+                padding: 15px;
+            }
+            
+            .filters {
+                padding: 15px;
+            }
+            
+            .filter-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .peserta-item {
+                grid-template-columns: 30px 1fr 80px;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+            
+            .peserta-kelompok {
+                display: none;
+            }
+            
+            .refresh-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .tab-navigation {
+                margin: 0 -5px 20px -5px;
+            }
+            
+            .peserta-item {
+                grid-template-columns: 25px 1fr 70px;
+                font-size: 0.9rem;
+            }
+            
+            .table-container {
+                max-height: 50vh;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .connecting {
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -196,31 +472,86 @@
             <h1>📊 Dashboard CAI 2025</h1>
             <div class="last-update">
                 <span id="lastUpdate">Memuat data...</span><br>
-                <small id="connectionStatus">🔗 Menghubungkan ke Google Sheets...</small>
+                <small id="connectionStatus" class="connecting">🔗 Menghubungkan ke Google Sheets...</small>
             </div>
         </div>
 
-        <div class="stats-overview">
-            <div class="stat-card">
-                <div class="stat-number" id="totalPeserta">-</div>
-                <div class="stat-label">Total Peserta</div>
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('dashboard')">
+                📊 Dashboard
+            </button>
+            <button class="tab-btn" onclick="showTab('peserta')">
+                👥 List Peserta
+            </button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalPeserta">-</div>
+                    <div class="stat-label">Total Peserta</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalDesa">-</div>
+                    <div class="stat-label">Total Desa</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalKelompok">-</div>
+                    <div class="stat-label">Total Kelompok</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalKiriman">-</div>
+                    <div class="stat-label">Total Kiriman</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalDesa">-</div>
-                <div class="stat-label">Total Desa</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalKelompok">-</div>
-                <div class="stat-label">Total Kelompok</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalKiriman">-</div>
-                <div class="stat-label">Total Kiriman</div>
+
+            <div id="dashboardContent" class="dashboard-grid">
+                <div class="loading">🔄 Memuat data real-time dari Google Sheets...</div>
             </div>
         </div>
 
-        <div id="dashboardContent" class="dashboard-grid">
-            <div class="loading">Memuat data dari spreadsheet...</div>
+        <!-- Peserta Tab -->
+        <div id="peserta-tab" class="tab-content">
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="searchName">🔍 Cari Nama</label>
+                        <input type="text" id="searchName" placeholder="Ketik nama peserta..." oninput="filterPeserta()">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDesa">🏘️ Filter Desa</label>
+                        <select id="filterDesa" onchange="filterPeserta()">
+                            <option value="">Semua Desa</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterKelompok">👥 Filter Kelompok</label>
+                        <select id="filterKelompok" onchange="filterPeserta()">
+                            <option value="">Semua Kelompok</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterJenjang">🎓 Filter Jenjang</label>
+                        <select id="filterJenjang" onchange="filterPeserta()">
+                            <option value="">Semua Jenjang</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="peserta-table">
+                <div class="table-header">
+                    <span>👥 Daftar Peserta CAI 2025</span>
+                    <span id="pesertaCount">0 Peserta</span>
+                </div>
+                <div class="table-container">
+                    <ul id="pesertaList" class="peserta-list">
+                        <li class="loading">🔄 Memuat daftar peserta...</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <button class="refresh-btn" onclick="loadData()" title="Refresh Data">
@@ -229,244 +560,33 @@
     </div>
 
     <script>
-        // Sample data - replace with actual Google Sheets API call
-        const sampleData = {
-            "DESA UTARA 1": {
-                "Prenggon Timur": 0,
-                "Sanggrahan": 0,
-                "Karang": 0,
-                "Mantung": 0,
-                "Candi Selatan": 0,
-                "Candi Utara": 0,
-                "Cemani": 0
-            },
-            "DESA UTARA 2": {
-                "Gondang": 0,
-                "Plumbon": 0,
-                "Ngenden": 0,
-                "Badongan": 0,
-                "Prenggon Barat": 0,
-                "Prenggon Selatan": 0,
-                "Dukuh": 0
-            },
-            "DESA SELATAN": {
-                "Nampan": 0,
-                "Beran": 0,
-                "Gedangan": 0,
-                "Soka": 0,
-                "Pasekan": 0,
-                "Temusu Timur": 0,
-                "Temusu Utara": 0,
-                "Temusu Barat": 0,
-                "Tegol Baru": 0,
-                "Kadokan": 0
-            },
-            "DESA BAKI 1": {
-                "Dukuh Mancasan": 0,
-                "Mancasan": 0,
-                "Branglor Utara": 0,
-                "Branglor Selatan": 0,
-                "Jotangan": 0,
-                "Teplok": 0,
-                "Kauman": 0,
-                "Tapusun": 0
-            },
-            "DESA BAKI 2": {
-                "Kragilan": 0,
-                "Kemasan": 0,
-                "Jetis": 3,
-                "Bakalan": 0,
-                "Junglang": 0,
-                "Karang Beton": 0,
-                "Sayangan": 0
-            }
-        };
-
-        function loadData() {
-            // Show loading
-            document.getElementById('dashboardContent').innerHTML = '<div class="loading">🔄 Memuat data real-time dari Google Sheets...</div>';
-            updateLastUpdate('loading');
-            
-            // Load real data from Google Sheets
-            loadDataFromSheets().then(() => {
-                updateLastUpdate('success');
-            }).catch(() => {
-                // Fallback to sample data if Sheets fails
-                console.log('Falling back to sample data');
-                renderDashboard();
-                updateLastUpdate('error');
-            });
-        }
-
-        function renderDashboard() {
-            const container = document.getElementById('dashboardContent');
-            let html = '';
-            let totalPeserta = 0;
-            let totalKelompok = 0;
-            let totalKiriman = 0;
-
-            for (const [desa, kelompokData] of Object.entries(sampleData)) {
-                const desaClass = desa.toLowerCase().replace(/\s+/g, '-');
-                let desaKiriman = 0;
-                
-                html += `
-                    <div class="card">
-                        <div class="card-header ${desaClass}">
-                            ${desa}
-                        </div>
-                        <div class="card-content">
-                `;
-
-                for (const [kelompok, kiriman] of Object.entries(kelompokData)) {
-                    html += `
-                        <div class="data-row">
-                            <span class="kelompok">${kelompok}</span>
-                            <span class="kiriman">${kiriman}</span>
-                        </div>
-                    `;
-                    desaKiriman += kiriman;
-                    totalKelompok++;
-                }
-
-                html += `
-                        </div>
-                    </div>
-                `;
-                
-                totalKiriman += desaKiriman;
-                if (desaKiriman > 0) totalPeserta++;
-            }
-
-            container.innerHTML = html;
-            
-            // Update statistics
-            document.getElementById('totalPeserta').textContent = totalPeserta;
-            document.getElementById('totalDesa').textContent = Object.keys(sampleData).length;
-            document.getElementById('totalKelompok').textContent = totalKelompok;
-            document.getElementById('totalKiriman').textContent = totalKiriman;
-        }
-
-        function updateLastUpdate(status = 'success') {
-            const now = new Date();
-            const timestamp = now.toLocaleString('id-ID', {
-                day: '2-digit',
-                month: '2-digit', 
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            document.getElementById('lastUpdate').textContent = `Terakhir diperbarui: ${timestamp}`;
-            
-            const statusElement = document.getElementById('connectionStatus');
-            if (status === 'success') {
-                statusElement.textContent = '✅ Terhubung ke Google Sheets';
-                statusElement.style.color = '#28a745';
-            } else if (status === 'error') {
-                statusElement.textContent = '❌ Gagal terhubung - menggunakan data fallback';
-                statusElement.style.color = '#dc3545';
-            } else {
-                statusElement.textContent = '🔄 Menghubungkan ke Google Sheets...';
-                statusElement.style.color = '#ffc107';
-            }
-        }
-
-        // REAL-TIME Auto refresh every 30 seconds (not 5 minutes)
-        setInterval(loadData, 30 * 1000); // 30 seconds for real-time feel
-
-        // Page visibility API - refresh when user comes back to tab
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                loadData();
-            }
-        });
-
-        // Initial load
-        loadData();
-
         // REAL-TIME Google Sheets Integration
         const SHEET_CONFIG = {
-            // Sheet ID dari URL Anda
             SHEET_ID: '1bnSr5SGPSVsY6UXurPwsuTQzg8r7ZYh1zisgFohc_bw',
-            // GID untuk sheet "PESERTA CAI 2025" 
             GID: '529062017',
-            // Gunakan metode JSONP untuk avoid CORS
-            USE_JSONP: true
+            MAX_RETRIES: 3,
+            RETRY_DELAY: 2000
         };
 
-        async function loadDataFromSheets() {
-            try {
-                // Metode 1: CSV Export (paling reliable untuk avoid CORS)
-                const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.SHEET_ID}/export?format=csv&gid=${SHEET_CONFIG.GID}`;
-                
-                // Gunakan proxy untuk avoid CORS jika perlu
-                const PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(CSV_URL)}`;
-                
-                console.log('Attempting to fetch from:', CSV_URL);
-                
-                let response;
-                try {
-                    // Coba direct access dulu
-                    response = await fetch(CSV_URL, {
-                        mode: 'cors',
-                        cache: 'no-cache'
-                    });
-                    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    console.log('Direct access successful');
-                } catch (directError) {
-                    // Jika gagal, gunakan proxy
-                    console.log('Direct access failed, using proxy...', directError.message);
-                    response = await fetch(PROXY_URL);
-                    if (!response.ok) throw new Error(`Proxy failed: HTTP ${response.status}`);
-                    console.log('Proxy access successful');
-                }
-                
-                const csvText = await response.text();
-                console.log('CSV data loaded, length:', csvText.length);
-                console.log('First 300 chars:', csvText.substring(0, 300));
-                
-                if (csvText.length < 10) {
-                    throw new Error('CSV data too short, possibly empty sheet');
-                }
-                
-                const csvData = parseCSV(csvText);
-                console.log('CSV parsed, rows:', csvData.length);
-                
-                if (csvData.length < 2) {
-                    throw new Error('No data rows found in CSV');
-                }
-                
-                processCAISheetData(csvData);
-                return Promise.resolve();
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('dashboardContent').innerHTML = `
-                    <div class="error">
-                        ❌ Gagal memuat data dari Google Sheets<br>
-                        <small><strong>Error:</strong> ${error.message}</small><br>
-                        <small><strong>Sheet ID:</strong> ${SHEET_CONFIG.SHEET_ID}</small><br>
-                        <small><strong>GID:</strong> ${SHEET_CONFIG.GID}</small><br>
-                        <br>
-                        <strong>Troubleshooting:</strong><br>
-                        1. Pastikan sheet sudah di-share publicly<br>
-                        2. Cek Sheet ID dan GID sudah benar<br>
-                        3. Tunggu 10 detik, akan fallback ke data demo
-                    </div>`;
-                
-                // Fallback to sample data after delay
-                setTimeout(() => {
-                    console.log('Using fallback sample data');
-                    renderDashboard();
-                }, 5000);
-                
-                return Promise.reject(error);
-            }
+        // Global data storage
+        let currentData = {};
+        let pesertaData = [];
+        let filteredPesertaData = [];
+
+        // Tab Management
+        function showTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
         }
 
+        // Enhanced CSV Parser
         function parseCSV(csvText) {
-            const lines = csvText.split('\n');
+            const lines = csvText.split('\n').filter(line => line.trim());
             return lines.map(line => {
                 const values = [];
                 let current = '';
@@ -477,96 +597,184 @@
                     if (char === '"') {
                         inQuotes = !inQuotes;
                     } else if (char === ',' && !inQuotes) {
-                        values.push(current.trim());
+                        values.push(current.trim().replace(/^"|"$/g, ''));
                         current = '';
                     } else {
                         current += char;
                     }
                 }
-                values.push(current.trim());
+                values.push(current.trim().replace(/^"|"$/g, ''));
                 return values;
             });
         }
 
-        function processCAISheetData(rawData) {
-            console.log('Processing CAI Sheet Data...', rawData.length, 'rows');
+        // Enhanced Sheet Data Loading with Retry Logic
+        async function loadDataFromSheets(retryCount = 0) {
+            try {
+                const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.SHEET_ID}/export?format=csv&gid=${SHEET_CONFIG.GID}`;
+                const PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(CSV_URL)}`;
+                
+                console.log(`Attempt ${retryCount + 1} - Loading data from sheets...`);
+                updateConnectionStatus('connecting');
+                
+                let response;
+                let method = 'direct';
+                
+                try {
+                    // Try direct access first
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+                    
+                    response = await fetch(CSV_URL, {
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    console.log('✅ Direct access successful');
+                    
+                } catch (directError) {
+                    console.log('⚠️ Direct access failed, trying proxy...', directError.message);
+                    method = 'proxy';
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+                    
+                    response = await fetch(PROXY_URL, {
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) throw new Error(`Proxy HTTP ${response.status}`);
+                    console.log('✅ Proxy access successful');
+                }
+                
+                const csvText = await response.text();
+                
+                if (csvText.length < 50) {
+                    throw new Error('CSV data too short - possible empty response');
+                }
+                
+                console.log(`📊 CSV loaded (${method}):`, csvText.length, 'chars');
+                
+                const csvData = parseCSV(csvText);
+                
+                if (csvData.length < 2) {
+                    throw new Error('No data rows found');
+                }
+                
+                console.log('📝 CSV parsed:', csvData.length, 'rows');
+                
+                // Process both dashboard and peserta data
+                processCAISheetData(csvData);
+                processPesertaData(csvData);
+                
+                updateConnectionStatus('success');
+                return Promise.resolve();
+                
+            } catch (error) {
+                console.error(`❌ Attempt ${retryCount + 1} failed:`, error.message);
+                
+                if (retryCount < SHEET_CONFIG.MAX_RETRIES - 1) {
+                    console.log(`🔄 Retrying in ${SHEET_CONFIG.RETRY_DELAY/1000}s...`);
+                    updateConnectionStatus('retrying');
+                    
+                    await new Promise(resolve => setTimeout(resolve, SHEET_CONFIG.RETRY_DELAY));
+                    return loadDataFromSheets(retryCount + 1);
+                } else {
+                    console.log('❌ All retry attempts failed');
+                    updateConnectionStatus('error');
+                    showError(error.message);
+                    
+                    // Use fallback data after final failure
+                    setTimeout(() => {
+                        console.log('🔄 Using fallback data...');
+                        renderDashboard();
+                        updateConnectionStatus('fallback');
+                    }, 3000);
+                    
+                    return Promise.reject(error);
+                }
+            }
+        }
+
+        function updateConnectionStatus(status) {
+            const statusElement = document.getElementById('connectionStatus');
+            const statusMap = {
+                'connecting': { text: '🔄 Menghubungkan...', color: '#ffc107', class: 'connecting' },
+                'retrying': { text: '🔄 Mencoba ulang...', color: '#fd7e14', class: 'connecting' },
+                'success': { text: '✅ Terhubung ke Google Sheets', color: '#28a745', class: '' },
+                'error': { text: '❌ Gagal terhubung - menggunakan data fallback', color: '#dc3545', class: '' },
+                'fallback': { text: '⚠️ Menggunakan data demo', color: '#ffc107', class: '' }
+            };
             
-            // Initialize structure based on your sheet
+            const config = statusMap[status];
+            if (config && statusElement) {
+                statusElement.textContent = config.text;
+                statusElement.style.color = config.color;
+                statusElement.className = config.class;
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = `
+                <div class="error">
+                    ❌ Gagal memuat data dari Google Sheets<br>
+                    <small><strong>Error:</strong> ${message}</small><br>
+                    <small>Mencoba ulang otomatis dalam beberapa detik...</small>
+                </div>`;
+            
+            document.getElementById('dashboardContent').innerHTML = errorDiv;
+            document.getElementById('pesertaList').innerHTML = '<li class="error" style="color:white;">❌ Gagal memuat daftar peserta</li>';
+        }
+
+        // Process Dashboard Data
+        function processCAISheetData(rawData) {
+            console.log('📊 Processing dashboard data...');
+            
             const caiData = {
                 "DESA UTARA 1": {
-                    "Prenggon Timur": 0,
-                    "Sanggrahan": 0,
-                    "Karang": 0,
-                    "Mantung": 0,
-                    "Candi Selatan": 0,
-                    "Candi Utara": 0,
-                    "Cemani": 0
+                    "Prenggon Timur": 0, "Sanggrahan": 0, "Karang": 0, "Mantung": 0,
+                    "Candi Selatan": 0, "Candi Utara": 0, "Cemani": 0
                 },
                 "DESA UTARA 2": {
-                    "Gondang": 0,
-                    "Plumbon": 0,
-                    "Ngenden": 0,
-                    "Badongan": 0,
-                    "Prenggon Barat": 0,
-                    "Prenggon Selatan": 0,
-                    "Dukuh": 0
+                    "Gondang": 0, "Plumbon": 0, "Ngenden": 0, "Badongan": 0,
+                    "Prenggon Barat": 0, "Prenggon Selatan": 0, "Dukuh": 0
                 },
                 "DESA SELATAN": {
-                    "Nampan": 0,
-                    "Beran": 0,
-                    "Gedangan": 0,
-                    "Soka": 0,
-                    "Pasekan": 0,
-                    "Temusu Timur": 0,
-                    "Temusu Utara": 0,
-                    "Temusu Barat": 0,
-                    "Tegol Baru": 0,
-                    "Kadokan": 0
+                    "Nampan": 0, "Beran": 0, "Gedangan": 0, "Soka": 0, "Pasekan": 0,
+                    "Temusu Timur": 0, "Temusu Utara": 0, "Temusu Barat": 0, "Tegol Baru": 0, "Kadokan": 0
                 },
                 "DESA BAKI 1": {
-                    "Dukuh Mancasan": 0,
-                    "Mancasan": 0,
-                    "Branglor Utara": 0,
-                    "Branglor Selatan": 0,
-                    "Jotangan": 0,
-                    "Teplok": 0,
-                    "Kauman": 0,
-                    "Tepusun": 0
+                    "Dukuh Mancasan": 0, "Mancasan": 0, "Branglor Utara": 0, "Branglor Selatan": 0,
+                    "Jotangan": 0, "Teplok": 0, "Kauman": 0, "Tepusun": 0
                 },
                 "DESA BAKI 2": {
-                    "Kragilan": 0,
-                    "Kemasan": 0,
-                    "Jetis": 0,
-                    "Bakalan": 0,
-                    "Junglang": 0,
-                    "Karang Beton": 0,
-                    "Sayangan": 0
+                    "Kragilan": 0, "Kemasan": 0, "Jetis": 0, "Bakalan": 0,
+                    "Junglang": 0, "Karang Beton": 0, "Sayangan": 0
                 }
             };
             
-            // Process data dari kolom A-E (peserta)
             let totalPesertaFromData = 0;
             
-            for (let i = 1; i < rawData.length; i++) { // Skip header
+            for (let i = 1; i < rawData.length; i++) {
                 const row = rawData[i];
-                if (row.length >= 3 && row[1] && row[2]) { // Ada desa dan kelompok
+                if (row.length >= 3 && row[1] && row[2]) {
                     const desa = row[1].trim();
                     const kelompok = row[2].trim();
                     
-                    // Normalisasi nama desa
                     let normalizedDesa = desa;
-                    if (desa.includes('UTARA') && desa.includes('1')) normalizedDesa = 'DESA UTARA 1';
+                    if (desa.includes('BAKI') && desa.includes('1')) normalizedDesa = 'DESA BAKI 1';
+                    else if (desa.includes('BAKI') && desa.includes('2')) normalizedDesa = 'DESA BAKI 2';
+                    else if (desa.includes('UTARA') && desa.includes('1')) normalizedDesa = 'DESA UTARA 1';
                     else if (desa.includes('UTARA') && desa.includes('2')) normalizedDesa = 'DESA UTARA 2';
                     else if (desa.includes('SELATAN')) normalizedDesa = 'DESA SELATAN';
-                    else if (desa.includes('BAKI') && desa.includes('1')) normalizedDesa = 'DESA BAKI 1';
-                    else if (desa.includes('BAKI') && desa.includes('2')) normalizedDesa = 'DESA BAKI 2';
                     
-                    // Count peserta per kelompok
-                    if (caiData[normalizedDesa] && caiData[normalizedDesa].hasOwnProperty(kelompok)) {
-                        caiData[normalizedDesa][kelompok]++;
-                        totalPesertaFromData++;
-                    } else if (caiData[normalizedDesa]) {
-                        // Jika kelompok baru, tambahkan
+                    if (caiData[normalizedDesa]) {
                         if (!caiData[normalizedDesa][kelompok]) {
                             caiData[normalizedDesa][kelompok] = 0;
                         }
@@ -576,11 +784,123 @@
                 }
             }
             
-            console.log('Processed CAI Data:', caiData);
-            console.log('Total Peserta Found:', totalPesertaFromData);
-            
-            // Update the display
+            currentData = caiData;
+            console.log('✅ Dashboard data processed:', totalPesertaFromData, 'peserta');
             renderDashboardFromData(caiData);
+        }
+
+        // Process Peserta List Data
+        function processPesertaData(rawData) {
+            console.log('👥 Processing peserta list...');
+            
+            pesertaData = [];
+            const uniqueValues = { desa: new Set(), kelompok: new Set(), jenjang: new Set() };
+            
+            for (let i = 1; i < rawData.length; i++) {
+                const row = rawData[i];
+                if (row.length >= 5 && row[1] && row[2] && row[3]) {
+                    const peserta = {
+                        no: i,
+                        desa: row[1].trim(),
+                        kelompok: row[2].trim(),
+                        nama: row[3].trim(),
+                        jenjang: row[4] ? row[4].trim() : 'N/A'
+                    };
+                    
+                    pesertaData.push(peserta);
+                    uniqueValues.desa.add(peserta.desa);
+                    uniqueValues.kelompok.add(peserta.kelompok);
+                    uniqueValues.jenjang.add(peserta.jenjang);
+                }
+            }
+            
+            // Update filter options
+            updateFilterOptions(uniqueValues);
+            
+            // Initial render
+            filteredPesertaData = [...pesertaData];
+            renderPesertaList();
+            
+            console.log('✅ Peserta data processed:', pesertaData.length, 'peserta');
+        }
+
+        function updateFilterOptions(uniqueValues) {
+            const filterDesa = document.getElementById('filterDesa');
+            const filterKelompok = document.getElementById('filterKelompok');
+            const filterJenjang = document.getElementById('filterJenjang');
+            
+            // Clear existing options (except "Semua")
+            [filterDesa, filterKelompok, filterJenjang].forEach(select => {
+                while (select.children.length > 1) {
+                    select.removeChild(select.lastChild);
+                }
+            });
+            
+            // Add new options
+            [...uniqueValues.desa].sort().forEach(desa => {
+                const option = document.createElement('option');
+                option.value = desa;
+                option.textContent = desa;
+                filterDesa.appendChild(option);
+            });
+            
+            [...uniqueValues.kelompok].sort().forEach(kelompok => {
+                const option = document.createElement('option');
+                option.value = kelompok;
+                option.textContent = kelompok;
+                filterKelompok.appendChild(option);
+            });
+            
+            [...uniqueValues.jenjang].sort().forEach(jenjang => {
+                const option = document.createElement('option');
+                option.value = jenjang;
+                option.textContent = jenjang;
+                filterJenjang.appendChild(option);
+            });
+        }
+
+        function filterPeserta() {
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const filterDesa = document.getElementById('filterDesa').value;
+            const filterKelompok = document.getElementById('filterKelompok').value;
+            const filterJenjang = document.getElementById('filterJenjang').value;
+            
+            filteredPesertaData = pesertaData.filter(peserta => {
+                const matchName = peserta.nama.toLowerCase().includes(searchName);
+                const matchDesa = !filterDesa || peserta.desa === filterDesa;
+                const matchKelompok = !filterKelompok || peserta.kelompok === filterKelompok;
+                const matchJenjang = !filterJenjang || peserta.jenjang === filterJenjang;
+                
+                return matchName && matchDesa && matchKelompok && matchJenjang;
+            });
+            
+            renderPesertaList();
+        }
+
+        function renderPesertaList() {
+            const pesertaList = document.getElementById('pesertaList');
+            const pesertaCount = document.getElementById('pesertaCount');
+            
+            pesertaCount.textContent = `${filteredPesertaData.length} Peserta`;
+            
+            if (filteredPesertaData.length === 0) {
+                pesertaList.innerHTML = '<li class="no-data">Tidak ada peserta yang sesuai dengan filter</li>';
+                return;
+            }
+            
+            const html = filteredPesertaData.map(peserta => `
+                <li class="peserta-item">
+                    <div class="peserta-no">${peserta.no}</div>
+                    <div class="peserta-info">
+                        <div class="peserta-nama">${peserta.nama}</div>
+                        <div class="peserta-details">${peserta.desa}</div>
+                    </div>
+                    <div class="peserta-kelompok">${peserta.kelompok}</div>
+                    <div class="peserta-jenjang">${peserta.jenjang}</div>
+                </li>
+            `).join('');
+            
+            pesertaList.innerHTML = html;
         }
 
         function renderDashboardFromData(data) {
@@ -602,7 +922,9 @@
                         <div class="card-content">
                 `;
 
-                for (const [kelompok, kiriman] of Object.entries(kelompokData)) {
+                const sortedKelompok = Object.entries(kelompokData).sort(([a], [b]) => a.localeCompare(b));
+                
+                for (const [kelompok, kiriman] of sortedKelompok) {
                     html += `
                         <div class="data-row">
                             <span class="kelompok">${kelompok}</span>
@@ -619,7 +941,7 @@
                 `;
                 
                 totalKiriman += desaKiriman;
-                if (desaKiriman > 0) totalPeserta++;
+                totalPeserta = pesertaData.length || totalKiriman;
             }
 
             container.innerHTML = html;
@@ -630,6 +952,72 @@
             document.getElementById('totalKelompok').textContent = totalKelompok;
             document.getElementById('totalKiriman').textContent = totalKiriman;
         }
+
+        // Fallback dashboard data
+        function renderDashboard() {
+            const sampleData = {
+                "DESA UTARA 1": {
+                    "Prenggon Timur": 0, "Sanggrahan": 0, "Karang": 0, "Mantung": 0,
+                    "Candi Selatan": 0, "Candi Utara": 0, "Cemani": 0
+                },
+                "DESA UTARA 2": {
+                    "Gondang": 0, "Plumbon": 0, "Ngenden": 0, "Badongan": 0,
+                    "Prenggon Barat": 0, "Prenggon Selatan": 0, "Dukuh": 0
+                },
+                "DESA SELATAN": {
+                    "Nampan": 0, "Beran": 0, "Gedangan": 0, "Soka": 0, "Pasekan": 0,
+                    "Temusu Timur": 0, "Temusu Utara": 0, "Temusu Barat": 0, "Tegol Baru": 0, "Kadokan": 0
+                },
+                "DESA BAKI 1": {
+                    "Dukuh Mancasan": 0, "Mancasan": 0, "Branglor Utara": 0, "Branglor Selatan": 0,
+                    "Jotangan": 0, "Teplok": 2, "Kauman": 0, "Tepusun": 0
+                },
+                "DESA BAKI 2": {
+                    "Kragilan": 0, "Kemasan": 0, "Jetis": 3, "Bakalan": 0,
+                    "Junglang": 0, "Karang Beton": 0, "Sayangan": 0
+                }
+            };
+            
+            renderDashboardFromData(sampleData);
+        }
+
+        function updateLastUpdate(status = 'success') {
+            const now = new Date();
+            const timestamp = now.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('lastUpdate').textContent = `Terakhir diperbarui: ${timestamp}`;
+        }
+
+        function loadData() {
+            document.getElementById('dashboardContent').innerHTML = '<div class="loading">🔄 Memuat data real-time...</div>';
+            document.getElementById('pesertaList').innerHTML = '<li class="loading">🔄 Memuat daftar peserta...</li>';
+            
+            loadDataFromSheets().then(() => {
+                updateLastUpdate('success');
+            }).catch(() => {
+                updateLastUpdate('error');
+            });
+        }
+
+        // Auto refresh every 30 seconds
+        setInterval(loadData, 30 * 1000);
+
+        // Refresh when tab becomes visible
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                loadData();
+            }
+        });
+
+        // Initial load
+        loadData();
     </script>
 </body>
 </html>
