@@ -1350,7 +1350,7 @@
         let filteredPesertaData = [];
         let displayedPesertaData = []; // For load more functionality
         let currentDisplayCount = 0;
-        const ITEMS_PER_LOAD = 50; // Load 50 items at a time
+        const ITEMS_PER_LOAD = 20; // Load 50 items at a time
         let isLoading = false;
 
         // Modal Management Functions
@@ -2005,7 +2005,7 @@
         }
 
         // Auto refresh every 90 seconds (improved performance)
-        setInterval(loadData, 90 * 1000);
+        setInterval(loadData, 240 * 1000);
 
         // Security: Disable right-click and dev tools shortcuts
         document.addEventListener('contextmenu', function(e) {
